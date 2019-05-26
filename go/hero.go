@@ -5,33 +5,32 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-
-	"github.com/gorilla/mux"
 	"encoding/json"
+	"github.com/gorilla/mux"
+	"sync"
 )
 
 // Globals
+var mutex sync.Mutex
 const maxExhaustion = 10
 var heroes = make(map[string]Hero)
 var fallenHeroes = make(map[string]Hero)
 
 type Hero struct {
-	PowerLevel int    `json:"PowerLevel"`
-	Exhaustion int    `json:"Exhaustion"`
-	Name       string `json:"Name"`
+	PowerLevel int        `json:"PowerLevel"`
+	Exhaustion int        `json:"Exhaustion"`
+	Name       string     `json:"Name"`
 }
 
 type Calamity struct {
-	PowerLevel int		   `json:"PowerLevel"`
+	PowerLevel int		 `json:"PowerLevel"`
 	Heroes     []string `json:"Heroes"`
 }
 
 type CalamityReport struct {
-	OutcomeMessage string     `json:"OutcomeMessage"`
+	OutcomeMessage string   `json:"OutcomeMessage"`
 	FallenHeroes   []string `json:"FallenHeroes"`
 }
-
-// TODO: make concurrent/add memory management
 
 // A superhero has passed away, their name may not be taken up again
 func killHeroByName(w http.ResponseWriter, r *http.Request) {
@@ -43,6 +42,8 @@ func killHeroByName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	mutex.Lock()
+	defer mutex.Unlock()
 	_, ok = heroes[name]
 	if !ok {
 		log.Println("Error: Hero", name, "was not found. Could not kill.")
@@ -68,6 +69,8 @@ func retireHeroByName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	mutex.Lock()
+	defer mutex.Unlock()
 	_, ok = heroes[name]
 	if !ok {
 		log.Println("Error: Hero", name, "was not found. Could not retire.")
@@ -93,6 +96,8 @@ func restHeroByName(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var hero Hero
+	mutex.Lock()
+	defer mutex.Unlock()
 	hero, ok = heroes[name]
 	if !ok {
 		log.Println("Error: Hero", name, "was not found. Could not rest.")
@@ -137,6 +142,8 @@ func inciteCalamity(w http.ResponseWriter, r *http.Request) {
 	var heroPowerSum = 0
 	var hero Hero
 	var ok bool
+	mutex.Lock()
+	defer mutex.Unlock()
 	for _, name := range calamity.Heroes {
 		hero, ok = heroes[name]
 		if !ok {
@@ -187,6 +194,8 @@ func getHeroJsonByName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	mutex.Lock()
+	defer mutex.Unlock()
 	var hero Hero
 	hero, ok = heroes[name]
 	if !ok {
@@ -222,6 +231,8 @@ func makeHero(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	mutex.Lock()
+	defer mutex.Unlock()
 	var ok bool
 	if _, ok = fallenHeroes[hero.Name]; ok {
 		log.Println("Error: Hero", hero.Name, "has fallen and their name cannot be used in making a new hero.")
