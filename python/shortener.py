@@ -1,22 +1,25 @@
-######## Shortener
+# Rule: Remove any number of lowercase letters from current (or none at all), then capitalize all remaining letters of current.
+# O(n)
+def can_derive(base, desired):
+    can_derive = False
 
-# Given two strings s, t, determine if string s can be changed into string t using the following rule:
+    # It is impossible to derive a string that is not uppercase
+    if not desired.isupper():
+        return can_derive
 
-# Remove any number of lowercase letters from s (or none at all), then capitalize all remaining letters of s.
+    index_desired = 0
+    desired_achieved = False
+    for char in base:
+        if desired_achieved:
+            if char.isupper():
+                can_derive = False
+        elif desired[index_desired] == char.upper():
+            index_desired += 1
+            if index_desired >= len(desired):
+                can_derive = True
+                desired_achieved = True
 
-# Example of the rule:
-# s = AAbcD
-# Possible outputs using the rule:
-# Remove none, capitalize -> AABCD
-# Remove c, capitalize -> AABD
-# Remove b, capitalize -> AACD
-# Remove b and c, capitalize -> AAD
-
-# If it is possible to create the string t by processing s using the rule, then the function should return True, otherwise return False.
-
-def shortener(s, t):
-    # code here
-    return False
+    return can_derive
 
 # Test Cases
 test_cases = [
@@ -29,4 +32,4 @@ test_cases = [
 
 for case in test_cases:
     s, t, output = case
-    print(shortener(s, t) == output)
+    print(can_derive(s, t) == output)
