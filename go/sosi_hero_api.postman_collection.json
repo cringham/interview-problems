@@ -1,0 +1,354 @@
+{
+	"info": {
+		"_postman_id": "ab2b10b5-5343-466d-b653-4bd790e6f5c0",
+		"name": "SOSi Hero API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getHeroJsonByName",
+			"item": [
+				{
+					"name": "Get One Punch Man",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8081/hero/One Punch Man",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"hero",
+								"One Punch Man"
+							]
+						},
+						"description": "Sample getHeroJsonByName request."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Black Panther",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8081/hero/Black Panther",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"hero",
+								"Black Panther"
+							]
+						},
+						"description": "Sample getHeroJsonByName request."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "makeHero",
+			"item": [
+				{
+					"name": "Make One Punch Man",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"PowerLevel\": 9999,\n    \"Exhaustion\": 1,\n    \"Name\": \"One Punch Man\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/hero",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"hero"
+							]
+						},
+						"description": "Sample makeHero request."
+					},
+					"response": []
+				},
+				{
+					"name": "Make Batman",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"PowerLevel\": 1500,\n    \"Exhaustion\": 8,\n    \"Name\": \"Batman\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/hero",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"hero"
+							]
+						},
+						"description": "Sample makeHero request."
+					},
+					"response": []
+				},
+				{
+					"name": "Make Wonder Woman",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"PowerLevel\": 2000,\n    \"Exhaustion\": 1,\n    \"Name\": \"Wonder Woman\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/hero",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"hero"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Make Wonder Woman - Bad Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"PowerLevel\": 1500,\n    \"Exhaustion\": 1,\n    \"Name\": \"Wonder Woman\""
+						},
+						"url": {
+							"raw": "http://localhost:8081/hero",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"hero"
+							]
+						},
+						"description": "To test ill-formed JSON requests."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "killHeroByName",
+			"item": [
+				{
+					"name": "Kill One Punch Man",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8081/hero/kill/One Punch Man",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"hero",
+								"kill",
+								"One Punch Man"
+							]
+						},
+						"description": "Sample killHeroByName request."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "retireHeroByName",
+			"item": [
+				{
+					"name": "Retire One Punch Man",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8081/hero/retire/One Punch Man",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"hero",
+								"retire",
+								"One Punch Man"
+							]
+						},
+						"description": "Sample request to retire One Punch Man."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "restHeroByName",
+			"item": [
+				{
+					"name": "Rest One Punch Man",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8081/hero/rest/One Punch Man",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"hero",
+								"rest",
+								"One Punch Man"
+							]
+						},
+						"description": "Sample request for resting One Punch Man."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "inciteCalamity",
+			"item": [
+				{
+					"name": "Calamity 3000 - Solo Hero victory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"PowerLevel\":3000,\n\"Heroes\":[ \"One Punch Man\" ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/calamity",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"calamity"
+							]
+						},
+						"description": "Sample calamity where heroes are victorious."
+					},
+					"response": []
+				},
+				{
+					"name": "Calamity 3000 - Heroes Victory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"PowerLevel\":3000,\n\"Heroes\":[ \"Wonder Woman\", \"Batman\" ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/calamity",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"calamity"
+							]
+						},
+						"description": "Multiple heroes combine their power level and are vistorious."
+					},
+					"response": []
+				},
+				{
+					"name": "Calamity 3000 - Heroes Lose",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"PowerLevel\":3000,\n\"Heroes\":[ \"Batman\" ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/calamity",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"calamity"
+							]
+						},
+						"description": "Heroes did not have a high enough power level."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
