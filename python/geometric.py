@@ -6,28 +6,54 @@ import math
 def count_geo_seq_ratio_one(sequence):
     tuple_count = 0
 
-    previous_term = None
-    for term1 in sequence:
-        if term1 == previous_term:
+    previous_unique_term = None
+    for comparison_term in sequence:
+        if comparison_term == previous_unique_term:
             pass
         else:
             term_count = 0
-            for term2 in sequence:
-                if term2 == term1:
+            for term in sequence:
+                if term == comparison_term:
                     term_count += 1
             combinations = math.factorial(term_count) / (math.factorial(term_count - 3) * 6)  # C(n, r) = n! / ((n - r)! * r!)
             tuple_count += combinations
-        previous_term = term1
+        previous_unique_term = comparison_term
 
     return tuple_count
 
 
-# O(n^2)
+# O(n^3)
+def count_geo_seq_unsorted(sequence, ratio):
+    tuple_count = 0
+
+    for term3_index in range(len(sequence)-1, -1, -1):
+        # If a large value causes float division overflow, use integer division
+        try:
+            term3 = sequence[term3_index]
+            term2 = term3 / ratio
+            term1 = term2 / ratio
+        except OverflowError:
+            term3 = sequence[term3_index]
+            term2 = term3 // ratio
+            term1 = term2 // ratio
+
+        for comp_term2_index in range(len(sequence)-1, -1, -1):
+            comp_term2 = sequence[comp_term2_index]
+            if comp_term2 == term2 and comp_term2_index < term3_index:
+                for comp_term1_index in range(len(sequence)-1, -1, -1):
+                    comp_term1 = sequence[comp_term1_index]
+                    if comp_term1 == term1 and comp_term1_index < comp_term2_index:
+                        tuple_count += 1
+
+    return tuple_count
+
+
+# O(n^3)
 def count_geo_seq(sequence, ratio):
     tuple_count = 0
 
     if sequence != sorted(sequence):
-        return 0
+        return count_geo_seq_unsorted(sequence, ratio)
 
     if ratio == 1:
         return count_geo_seq_ratio_one(sequence)
@@ -107,6 +133,6 @@ def construct_test_cases(unsorted=False):
     return test_cases
 
 
-for case in construct_test_cases():
+for case in construct_test_cases(unsorted=True):
     l, r, output = case
     print(count_geo_seq(l, r) == output)
