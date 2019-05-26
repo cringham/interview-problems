@@ -1,48 +1,60 @@
-##### Finding Geometric Sequences
-
-# Part A
-# Given a list (L), positive integers sorted in ascending order
-# And a ratio (R) >= 1
-# Find the number of groups of 3 indices (i,j,k) in the list such that: 
-# 1. i < j < k
-# 2. {L[i], L[j], L[k]} is a geometric sequence with a common ratio r
-#    i.e. R*L[i] == L[j], R*L[j] == L[k] or R^2 * L[i] == R * L[j] == L[k]
-
-# Example:
-# L = [1,1,5,25,25,125,625]
-# R = 5
-
-# triplets = [
-#     (0, 2, 3)
-#     (0, 2, 4),
-#     (1, 2, 3),
-#     (1, 2, 4),
-#     (2, 3, 5),
-#     (2, 4, 5),
-#     (3, 5, 6),
-#     (4, 5, 6)
-# ]
-# count = 8
-
-# Part B
-# How would your solution change if the list were unsorted? What if the ratio and list items did not need to be positive?
-#  
-# Given a list (L) of integers (unsorted, positive or negative)
-# And a ratio (R) that is a non-zero real number:
-# Find the same sets of indices as indicated in Part A
-#
-# You can use the second set of test cases to test a solution to this part.
-# To test your solution with the unsorted test cases, add the unsorted=True argument to the case loop
-# 
-# for case in construct_test_cases(unsorted=True):
-#     l, r, output = case
-#     print(find_geo_seq(l, r) == output)
-
 import random
+import math
 
-def find_geo_seq(l, r):
-    # code here
-    return 0
+
+# O(n^2)
+def count_geo_seq_ratio_one(sequence):
+    tuple_count = 0
+
+    previous_term = None
+    for term1 in sequence:
+        if term1 == previous_term:
+            pass
+        else:
+            term_count = 0
+            for term2 in sequence:
+                if term2 == term1:
+                    term_count += 1
+            combinations = math.factorial(term_count) / (math.factorial(term_count - 3) * 6)  # C(n, r) = n! / ((n - r)! * r!)
+            tuple_count += combinations
+        previous_term = term1
+
+    return tuple_count
+
+
+# O(n^2)
+def count_geo_seq(sequence, ratio):
+    tuple_count = 0
+
+    if sequence != sorted(sequence):
+        return 0
+
+    if ratio == 1:
+        return count_geo_seq_ratio_one(sequence)
+
+    for term3_index in range(len(sequence)-1, -1, -1):
+        # If a large value causes float division overflow, use integer division
+        try:
+            term3 = sequence[term3_index]
+            term2 = term3 / ratio
+            term1 = term2 / ratio
+        except OverflowError:
+            term3 = sequence[term3_index]
+            term2 = term3 // ratio
+            term1 = term2 // ratio
+
+        term2_count = 0
+        term1_count = 0
+        for term in sequence:
+            if term == term2:
+                term2_count += 1
+            elif term == term1:
+                term1_count += 1
+
+        tuple_count = tuple_count + (term2_count * term1_count)
+
+    return tuple_count
+
 
 def construct_test_cases(unsorted=False):
     """
@@ -94,6 +106,7 @@ def construct_test_cases(unsorted=False):
 
     return test_cases
 
+
 for case in construct_test_cases():
     l, r, output = case
-    print(find_geo_seq(l, r) == output)
+    print(count_geo_seq(l, r) == output)
